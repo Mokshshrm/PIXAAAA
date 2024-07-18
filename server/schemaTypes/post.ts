@@ -33,7 +33,6 @@ export default defineType({
         ],
         layout: 'radio',
       },
-
     }),
     defineField({
       name: 'mainImage',
@@ -42,16 +41,40 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      hidden: ({ parent }) => parent?.filesource !== 'image'
     }),
     defineField({
       name: 'otherMedia',
       title: 'Other Media',
       type: 'file',
+      hidden: ({ parent }) => parent?.filesource !== 'other'
     }),
     defineField({
       name: 'categories',
       title: 'Categories',
       type: 'string',
-    })
+    }),
+    defineField({
+      name: 'users',
+      title: 'Users',
+      type: 'reference',
+      to: { type: 'users' }
+    }),
+    defineField({
+      name: 'comments',
+      title: 'Comments',
+      type: 'array',
+      of: [
+        { type: 'reference', to: [{ type: 'comments' }] }
+      ]
+    }),
+    defineField({
+      name: 'collections',
+      title: 'Collections',
+      type: 'array',
+      of: [
+        { type: 'reference', to: [{ type: 'users' }] }
+      ]
+    }),
   ],
 })
